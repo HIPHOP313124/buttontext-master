@@ -14,10 +14,10 @@ public class MainActivity extends AppCompatActivity {
 
     private int num = 0;
     private int money = 10;
-    private StringBuilder priceMessage=new StringBuilder(money);
-    private int total=num*money;
-    private String name="馬種桶";
-    private StringBuilder orderMessage=new StringBuilder();
+    //private StringBuilder priceMessage=new StringBuilder(money);
+    private int total = num * money;
+    private String name = "馬種桶";
+    private StringBuilder orderMessage = new StringBuilder();
 
     // StringBuilder pricmessage=new StringBuilder(money);
     @Override
@@ -27,64 +27,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    public void submitorder(View v) {
-        ++num;
-        total=num*money;
-        nummethod();
-        moneymethod();
-    }
-    public void submitorder2(View v) {
-        --num;
-        total = num * money;
-        nummethod();
-        moneymethod();
-    }
-    public void reset(View v){
-num=0;
-        total = num * money;
-        nummethod();
-        moneymethod();
-
-
-    }
-
-    private void nummethod() {
+    void nummethod() {
         TextView number = (TextView) findViewById(R.id.textid);
         number.setText(String.valueOf(num));
     }
+
     private void moneymethod() {
         TextView number2 = (TextView) findViewById(R.id.moneynumber);
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.TAIWAN);
         number2.setText(nf.format(total));
     }
 
-    public void clickTopping(View view){
 
+    private void concatPriceMessage() {
 
+        CheckBox checkBox = (CheckBox) findViewById(R.id.check_box);
 
-        concatPriceMessage();
-        displayPriceMessage();
-
+        checkBox.isChecked();
     }
 
-    private void concatPriceMessage(){
-
-        CheckBox checkBox=(CheckBox)findViewById(R.id.check_box);
-        //priceMessage.append("Name")
-                /*
-                .append(name)
-                .append("\n")
-                .append("幾普賽")
-                .append("\n")
-                .append("加屎？")
-                .append("\n")
-                .append(total)
-                */
-                checkBox.isChecked();
-    }
-
-    private void displayPriceMessage(){
+    private void displayPriceMessage() {
         orderMessage.append("Name")
                 .append(name)
                 .append("\n")
@@ -95,11 +57,34 @@ num=0;
                 .append(total);
     }
 
-    public void order(View view){
-        TextView message = (TextView) findViewById(R.id.shoppingmessage);
-        message.setText(orderMessage);
+
+    public void mediator(View view) {
+        if (view.getId() == R.id.click) {
+            ++num;
+            total = num * money;
+            nummethod();
+            moneymethod();
+        } else if (view.getId() == R.id.button1) {
+            --num;
+            total = num * money;
+            nummethod();
+            moneymethod();
+        } else if (view.getId() == R.id.resetid) {
+            num = 0;
+            total = num * money;
+            nummethod();
+            moneymethod();
+
+        } else if (view.getId() == R.id.check_box) {
+            concatPriceMessage();
+            displayPriceMessage();
+        } else if (view.getId() == R.id.orderid) {
+            TextView message = (TextView) findViewById(R.id.shoppingmessage);
+            message.setText(orderMessage);
+        }
     }
-    }
+}
+
 
 
 
